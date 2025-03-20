@@ -152,15 +152,15 @@ blogRouter.get('/bulk',async(c)=>{
             datasourceUrl: c.env.DATABASE_URL,
         }).$extends(withAccelerate())
 
-        const body = c.req.query('filter') || "";
-
-        const getAllpost = await prisma.post.findMany({
-            where: body ? { 
+        const filter = c.req.query('filter')?.trim();
+        
+        const posts = await prisma.post.findMany({
+            where: filter ? { 
                 title: {
-                    contains: body,
+                    contains: filter,
                     mode: "insensitive"
                 }
-            } : undefined, // No filtering when `body` is empty
+            } : {}, 
             select: {
                 title: true,
                 content: true,
@@ -174,10 +174,7 @@ blogRouter.get('/bulk',async(c)=>{
         });
 
         c.status(200)
-        return c.json({
-            getAllpost
-        })
-
+        return c.json({ posts });
     }catch(error){
         return c.json({
             error:error,
