@@ -8,6 +8,8 @@
     "@hono/zod-validator": "^0.4.3",
     "@prisma/client": "^6.5.0",
     "@prisma/extension-accelerate": "^1.3.0",
+    "@ronak077/common-app": "^1.0.7",
+    "common-app": "^0.0.7",
     "dotenv": "^16.4.7",
     "hono": "^4.7.4",
     "prisma": "^6.5.0"

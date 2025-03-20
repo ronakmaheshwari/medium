@@ -2,7 +2,8 @@ import { Hono } from "hono";
 import { verify } from "hono/jwt";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from '@prisma/extension-accelerate'
-import {blogSchema,updateSchema} from '../../../common/src/index' //Worst Thing to have it like this Change It with Monorepos
+import { blogSchema, updateSchema } from "@ronak077/common-app";
+//import {blogSchema,updateSchema} from '../../../common/src/index' //Worst Thing to have it like this Change It with Monorepos
 // import zod  from 'zod'
 
 export const blogRouter = new Hono<{
@@ -175,7 +176,18 @@ blogRouter.get('/bulk',async(c)=>{
         });
 
         c.status(200)
-        return c.json({ posts });
+        // return c.json({ posts });
+        return c.json({
+            post: posts.map(x => {
+                return {
+                    title: x.title,
+                    content: x.content,
+                    id: x.id,
+                    author: x.author.name
+                };
+            })
+        });
+        
     }catch(error){
         return c.json({
             error:error,
