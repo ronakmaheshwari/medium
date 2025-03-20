@@ -2,7 +2,8 @@ import { Hono } from "hono";
 import { verify } from "hono/jwt";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from '@prisma/extension-accelerate'
-import zod  from 'zod'
+import {blogSchema,updateSchema} from '../../../common/src/index' //Worst Thing to have it like this Change It with Monorepos
+// import zod  from 'zod'
 
 export const blogRouter = new Hono<{
     Bindings: {
@@ -14,16 +15,16 @@ export const blogRouter = new Hono<{
 	}
 }>();
 
-const blogSchema = zod.object({
-    title:zod.string(),
-    content:zod.string()
-})
+// const blogSchema = zod.object({
+//     title:zod.string(),
+//     content:zod.string()
+// })
 
-const updateSchema = zod.object({
-    title:zod.string(),
-    content:zod.string(),
-    id:zod.string()
-})
+// const updateSchema = zod.object({
+//     title:zod.string(),
+//     content:zod.string(),
+//     id:zod.string()
+// })
 
 blogRouter.use("/*", async (c, next) => {
     const authHeader = c.req.header("authorization") || "";

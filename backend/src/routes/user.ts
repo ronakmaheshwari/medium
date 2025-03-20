@@ -2,7 +2,8 @@ import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign } from "hono/jwt";
-import zod  from 'zod'
+// import zod  from 'zod';
+import {SignupSchema,SigninSchema} from '../../../common/src/index' //Worst Thing to have it like this Change It with Monorepos
 // import { zValidator } from '@hono/zod-validator'
 
 export const userRouter = new Hono<{
@@ -12,14 +13,14 @@ export const userRouter = new Hono<{
     }
 }>();
 
-const SignupSchema = zod.object({
-  email:zod.string().email(),
-  password:zod.string().min(6)
-})
+// const SignupSchema = zod.object({
+//   email:zod.string().email(),
+//   password:zod.string().min(6)
+// })
 
-const SigninSchema = zod.object({
-  email:zod.string().email()
-})
+// const SigninSchema = zod.object({
+//   email:zod.string().email()
+// })
 
 userRouter.post('/signup',async(c)=>{
     const body =await c.req.json();
