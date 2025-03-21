@@ -164,9 +164,10 @@ blogRouter.get('/bulk',async(c)=>{
                 }
             } : {}, 
             select: {
+                id: true,
                 title: true,
                 content: true,
-                id: true,
+                published:true,
                 author: {
                     select: {
                         name: true
@@ -180,14 +181,15 @@ blogRouter.get('/bulk',async(c)=>{
         return c.json({
             post: posts.map(x => {
                 return {
+                    id: x.id,
                     title: x.title,
                     content: x.content,
-                    id: x.id,
+                    published:x.published,
                     author: x.author.name
                 };
             })
         });
-        
+            
     }catch(error){
         return c.json({
             error:error,
